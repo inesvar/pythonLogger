@@ -1,79 +1,134 @@
-from inspect import getframeinfo, stack
-from colored import fore, style
-from enum import Enum
-import os
-
-
-class LogLevels(Enum):
-    ERROR = 4
-    WARN = 3
-    INFO = 2
-    DEBUG = 1
-    TRACE = 0
-
-    def __le__(self, other):
-        if self.__class__ is other.__class__:
-            return self.value <= other.value
-        return NotImplemented
-
-    def __color(self):
-        match self:
-            case LogLevels.ERROR:
-                return fore('red')
-            case LogLevels.WARN:
-                return fore('orange_1')
-            case LogLevels.INFO:
-                return fore('green')
-            case LogLevels.DEBUG:
-                return fore('white')
-            case LogLevels.TRACE:
-                return fore('dark_gray')
-            case _:
-                error("unreachable")
-
-    def __print_header(self, file, flush):
-        # filename, lineno, function, code_context, index
-        info = getframeinfo(stack()[3][0])
-        color = self.__color() if file is None else ""
-        reset = style('reset') if file is None else ""
-        blue = secondary_color if file is None else ""
-        header = default_header.format(secondary_color=blue, filename=os.path.basename(
-            info.filename), lineno=info.lineno, function=info.function, reset=reset, color=color, log_name=self.name)
-        print(header, end="", file=file, flush=flush)
-        return reset
-
-    def log(self, *objects, sep=' ', end='\n', file=None, flush=False):
-        if log_level <= self:
-            reset_color = self.__print_header(file, flush)
-            print(*objects, reset_color,
-                  sep=sep, end=end, file=file, flush=flush)
-
-
-default_header = "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
-secondary_color = fore('blue')
-log_level = LogLevels.INFO
+from loglib import LogLevels
+from colored import fore
+import loglib
+import re
 
 
 def error(*objects, sep=' ', end='\n', file=None, flush=False):
+    """
+    Behaves like python's classic `print`, except
+    - it adds a header with the filename, the line number (see `setHeader()`)
+    - it uses an adapted color (red, it can be changed in `setLogColors()`)
+    The logs shown can be configured using `setLogLevel()`
+    """
     LogLevels.ERROR.log(*objects, sep=sep, end=end,
                         file=file, flush=flush)
 
 
 def warn(*objects, sep=' ', end='\n', file=None, flush=False):
+    """
+    Behaves like python's classic `print`, except
+    - it adds a header with the filename, the line number (see `setHeader()`)
+    - it uses an adapted color (orange, it can be changed in `setLogColors()`)
+    The logs shown can be configured using `setLogLevel()`
+    """
     LogLevels.WARN.log(*objects, sep=sep, end=end,
                        file=file, flush=flush)
 
 
 def info(*objects, sep=' ', end='\n', file=None, flush=False):
+    """
+    Behaves like python's classic `print`, except
+    - it adds a header with the filename, the line number (see `setHeader()`)
+    - it uses an adapted color (green, it can be changed in `setLogColors()`)
+    The logs shown can be configured using `setLogLevel()`
+    """
     LogLevels.INFO.log(*objects, sep=sep, end=end,
                        file=file, flush=flush)
 
 
 def debug(*objects, sep=' ', end='\n', file=None, flush=False):
+    """
+    Behaves like python's classic `print`, except
+    - it adds a header with the filename, the line number (see `setHeader()`)
+    - it uses an adapted color (white, it can be changed in `setLogColors()`)
+    The logs shown can be configured using `setLogLevel()`
+    """
     LogLevels.DEBUG.log(*objects, sep=sep, end=end,
                         file=file, flush=flush)
 
 
 def trace(*objects, sep=' ', end='\n', file=None, flush=False):
+    """
+    Behaves like python's classic `print`, except
+    - it adds a header with the filename, the line number (see `setHeader()`)
+    - it uses an adapted color (gray, it can be changed in `setLogColors()`)
+    The logs shown can be configured using `setLogLevel()`
+    """
     LogLevels.TRACE.log(*objects, sep=sep, end=end,
                         file=file, flush=flush)
+
+
+def setLogLevel(new_log_level):
+    """
+    Set the log level to either
+    - log.LogLevels.TRACE (see all logs)
+    - log.LogLevels.DEBUG (see all logs except trace logs)
+    - log.LogLevels.INFO (see all info, warn and error logs)
+    - log.LogLevels.WARN (see warn and error logs)
+    - log.LogLevels.ERROR (only see error logs)
+    """
+    if isinstance(new_log_level, LogLevels):
+        loglib.log_level = new_log_level
+        debug("Log level changed to", new_log_level)
+    else:
+        warn("'" + new_log_level + "'",
+             "is not an instance of type `LogLevels`, log level is unchanged.")
+
+
+def setHeader(header):
+    """
+    Change the header. Here's the default header for inspiration :
+    "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
+
+    `secondary color` (defaults to blue) can be set with `setSecondaryColor()`.
+    `color` is the adapted log level color which will apply for the objects being
+    printed after the header.
+    """
+    if not isinstance(header, str):
+        warn("'" + str(header) + "'",
+             "is not an instance of type `str`, header is unchanged.")
+        return
+    elif header.count("{") != header.count("}"):
+        warn("'" + str(header) + "'",
+             "doesn't contain the same number of '{' and '}', header is unchanged.")
+        return
+    elif all(placeholder in loglib.header_params for placeholder in re.findall(r"{(.*?)}", header)):
+        loglib.default_header = header
+        debug("Header changed to ", "'" + str(header) + "'")
+    else:
+        warn("'" + str(header) + "'",
+             "contains some unknown params (known params are ", str(loglib.header_params) + "), header is unchanged.")
+        return
+
+
+def setSecondaryColor(color):
+    """
+    Set optional header color using `fore()` from module `colored`.
+    Consult list of all available colors here : https://dslackw.gitlab.io/colored/tables/colors.
+    """
+    try:
+        loglib.secondary_color = fore(color)
+        debug("Secondary color changed to", color)
+    except:
+        warn("'" + str(color) + "'",
+             "isn't available in function `fore()` from module `colored`, secondary color is unchanged.")
+        return
+
+
+def setLogColors(colors: list[str]):
+    """
+    Set 5 log color using `fore()` from module `colored` for ERROR, WARN, INFO, DEBUG, TRACE in order.
+    Consult list of all available colors here : https://dslackw.gitlab.io/colored/tables/colors.
+    """
+    if len(colors) != 5:
+        warn("'" + str(colors) + "'",
+             "should contain 5 colors, log colors are unchanged.")
+        return
+    try:
+        loglib.log_colors = [fore(color)  for color in colors]
+        debug("Log colors changed to", colors)
+    except:
+        warn("Some color from '" + str(colors) + "'",
+             "isn't available in function `fore()` from module `colored`, log colors are unchanged.")
+        return

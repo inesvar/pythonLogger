@@ -1,12 +1,21 @@
 import log
-import colored
+
+
+def test():
+    log.setLogLevel("TRACE")
+    log.setLogLevel(log.LogLevels.TRACE)
+    log.setSecondaryColor('gray')
+    log.setSecondaryColor('dark_gray')
+    log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na")
+    log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na}")
+    log.setHeader(
+        "{secondary_color}{filename}:{lineno}{reset} -> {color}{log_name}: ")
+    log.setLogColors(['red', 'orange', 'green', 'white'])
+    log.setLogColors(['red', 'orange', 'green', 'white', 'gray'])
 
 
 def main():
-    log.log_level = log.LogLevels.TRACE
-    log.secondary_color = colored.fore('magenta')
-    log.default_header = "{filename}:{lineno}{reset} -> {color}{log_name}: "
-
+    log.setLogLevel(log.LogLevels.TRACE)
     # supports multiple arguments separated by commas like python's print
     log.error("lol", 5 + 4, "hey")
 
@@ -21,8 +30,9 @@ def main():
 
     # and of course you can specify the logs you want to see
     log.trace("lol", 5, "hey")
-    log.log_level = log.LogLevels.INFO
+    log.setLogLevel(log.LogLevels.INFO)
     log.trace("should not be printed")
 
 
+# test()
 main()

@@ -14,45 +14,51 @@ class LogLevels(Enum):
             return self.value <= other.value
         return NotImplemented
 
+    def _color(self):
+        match self:
+            case LogLevels.ERROR:
+                return fore('red')
+            case LogLevels.WARN:
+                return fore('orange_1')
+            case LogLevels.INFO:
+                return fore('green')
+            case LogLevels.DEBUG:
+                return fore('white')
+            case LogLevels.TRACE:
+                return fore('dark_gray')
+            case _:
+                error("unreachable")
+
+    def _print_header(self, file, flush):
+        color = (self._color(), style('reset')) if file is None else ("", "")
+        print(color[0] + self.name + ": ", end="", file=file, flush=flush)
+        return color[1]
+
+    def log(self, *objects, sep=' ', end='\n', file=None, flush=False):
+        if log_level <= self:
+            reset_color = self._print_header(file, flush)
+            print(*objects, reset_color,
+                  sep=sep, end=end, file=file, flush=flush)
+
 
 log_level = LogLevels.INFO
 
 
 def error(*objects, sep=' ', end='\n', file=None, flush=False):
-    if log_level <= LogLevels.ERROR:
-        color = (fore('red'), style('reset')) if file is None else ("", "")
-        print(color[0] + "ERROR:", end=" ", file=file, flush=flush)
-        print(*objects, color[1],
-              sep=sep, end=end, file=file, flush=flush)
+    LogLevels.ERROR.log(*objects, sep=sep, end=end, file=file, flush=flush)
 
 
 def warn(*objects, sep=' ', end='\n', file=None, flush=False):
-    if log_level <= LogLevels.WARN:
-        color = (fore('orange_1'), style('reset')) if file is None else ("", "")
-        print(color[0] + "WARN:", end=" ", file=file, flush=flush)
-        print(*objects, color[1],
-              sep=sep, end=end, file=file, flush=flush)
+    LogLevels.WARN.log(*objects, sep=sep, end=end, file=file, flush=flush)
 
 
 def info(*objects, sep=' ', end='\n', file=None, flush=False):
-    if log_level <= LogLevels.INFO:
-        color = (fore('green'), style('reset')) if file is None else ("", "")
-        print(color[0] + "INFO:", end=" ", file=file, flush=flush)
-        print(*objects, color[1],
-              sep=sep, end=end, file=file, flush=flush)
+    LogLevels.INFO.log(*objects, sep=sep, end=end, file=file, flush=flush)
 
 
 def debug(*objects, sep=' ', end='\n', file=None, flush=False):
-    if log_level <= LogLevels.DEBUG:
-        color = (fore('white'), style('reset')) if file is None else ("", "")
-        print(color[0] + "DEBUG:", end=" ", file=file, flush=flush)
-        print(*objects, color[1],
-              sep=sep, end=end, file=file, flush=flush)
+    LogLevels.DEBUG.log(*objects, sep=sep, end=end, file=file, flush=flush)
 
 
 def trace(*objects, sep=' ', end='\n', file=None, flush=False):
-    if log_level <= LogLevels.TRACE:
-        color = (fore('dark_gray'), style('reset')) if file is None else ("", "")
-        print(color[0] + "TRACE:", end=" ", file=file, flush=flush)
-        print(*objects, color[1],
-              sep=sep, end=end, file=file, flush=flush)
+    LogLevels.TRACE.log(*objects, sep=sep, end=end, file=file, flush=flush)

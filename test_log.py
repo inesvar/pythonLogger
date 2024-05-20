@@ -2,14 +2,18 @@ import log
 
 
 def test():
+    # incorrect, `log.LogLevels` should be used as input
     log.setLogLevel("TRACE")
     log.setLogLevel(log.LogLevels.TRACE)
+    # the color has to exist in https://dslackw.gitlab.io/colored/tables/colors
     log.setSecondaryColor('gray')
     log.setSecondaryColor('dark_gray')
+    # the header string has to be formattable
     log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na")
     log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na}")
     log.setHeader(
         "{secondary_color}{filename}:{lineno}{reset} -> {color}{log_name}: ")
+    # there has to be 5 valid colors from the table mentioned above
     log.setLogColors(['red', 'orange', 'green', 'white'])
     log.setLogColors(['red', 'orange', 'green', 'white', 'gray'])
 

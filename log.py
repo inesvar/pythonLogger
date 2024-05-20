@@ -70,7 +70,7 @@ def setLogLevel(new_log_level):
     """
     if isinstance(new_log_level, LogLevels):
         loglib.log_level = new_log_level
-        debug("Log level changed to", new_log_level)
+        trace("Log level changed to", new_log_level)
     else:
         warn("'" + new_log_level + "'",
              "is not an instance of type `LogLevels`, log level is unchanged.")
@@ -95,7 +95,7 @@ def setHeader(header):
         return
     elif all(placeholder in loglib.header_params for placeholder in re.findall(r"{(.*?)}", header)):
         loglib.default_header = header
-        debug("Header changed to ", "'" + str(header) + "'")
+        trace("Header changed to ", "'" + str(header) + "'")
     else:
         warn("'" + str(header) + "'",
              "contains some unknown params (known params are ", str(loglib.header_params) + "), header is unchanged.")
@@ -109,7 +109,7 @@ def setSecondaryColor(color):
     """
     try:
         loglib.secondary_color = fore(color)
-        debug("Secondary color changed to", color)
+        trace("Secondary color changed to", color)
     except:
         warn("'" + str(color) + "'",
              "isn't available in function `fore()` from module `colored`, secondary color is unchanged.")
@@ -127,7 +127,7 @@ def setLogColors(colors: list[str]):
         return
     try:
         loglib.log_colors = [fore(color)  for color in colors]
-        debug("Log colors changed to", colors)
+        trace("Log colors changed to", colors)
     except:
         warn("Some color from '" + str(colors) + "'",
              "isn't available in function `fore()` from module `colored`, log colors are unchanged.")

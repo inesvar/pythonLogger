@@ -45,12 +45,14 @@ class LogLevels(Enum):
     def log(self, *objects, sep=' ', end='\n', file=None, flush=False):
         if log_level <= self:
             reset_color = self.__print_header(file, flush)
-            print(*objects, reset_color,
-                  sep=sep, end=end, file=file, flush=flush)
+            print(*objects,
+                  sep=sep, end=end + reset_color, file=file, flush=flush)
 
 
 default_header = "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
-header_params = ["secondary_color", "filename", "lineno", "function", "reset", "color", "log_name"]
-log_colors = [fore('red'), fore('dark_orange'), fore('green'), fore('white'), fore('dark_gray')]
+log_colors = [fore('red'), fore('dark_orange'), fore(
+    'green_3a'), fore('white'), fore('steel_blue')]
 secondary_color = fore('blue')
 log_level = LogLevels.INFO
+header_params = ["secondary_color", "filename",
+                 "lineno", "function", "reset", "color", "log_name"]

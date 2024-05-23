@@ -59,7 +59,7 @@ def trace(*objects, sep=' ', end='\n', file=None, flush=False):
                         file=file, flush=flush)
 
 
-def setLogLevel(new_log_level):
+def setLogLevel(new_log_level: LogLevels):
     """
     Set the log level to either
     - log.LogLevels.TRACE (see all logs)
@@ -76,7 +76,7 @@ def setLogLevel(new_log_level):
              "is not an instance of type `LogLevels`, log level is unchanged.")
 
 
-def setHeader(header):
+def setHeader(header: str):
     """
     Change the header. Here's the default header for inspiration :
     "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
@@ -102,7 +102,7 @@ def setHeader(header):
         return
 
 
-def setSecondaryColor(color):
+def setSecondaryColor(color: str | int):
     """
     Set optional header color using `fore()` from module `colored`.
     Consult list of all available colors here : https://dslackw.gitlab.io/colored/tables/colors.
@@ -116,7 +116,7 @@ def setSecondaryColor(color):
         return
 
 
-def setLogColors(colors: list[str]):
+def setLogColors(colors: list[str | int]):
     """
     Set 5 log color using `fore()` from module `colored` for ERROR, WARN, INFO, DEBUG, TRACE in order.
     Consult list of all available colors here : https://dslackw.gitlab.io/colored/tables/colors.
@@ -126,9 +126,20 @@ def setLogColors(colors: list[str]):
              "should contain 5 colors, log colors are unchanged.")
         return
     try:
-        loglib.log_colors = [fore(color)  for color in colors]
+        loglib.log_colors = [fore(color) for color in colors]
         trace("Log colors changed to", colors)
     except:
         warn("Some color from '" + str(colors) + "'",
              "isn't available in function `fore()` from module `colored`, log colors are unchanged.")
         return
+
+
+def reset():
+    """
+    Reset initial values for header, log colors, secondary color and log level.
+    """
+    loglib.default_header = "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
+    loglib.log_colors = [fore('red'), fore('dark_orange'), fore(
+        'green_3a'), fore('white'), fore('steel_blue')]
+    loglib.secondary_color = fore('blue')
+    loglib.log_level = LogLevels.INFO

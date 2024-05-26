@@ -3,6 +3,12 @@ from colored import fore, style
 from enum import Enum
 import os
 
+default_header = None
+log_colors = None
+secondary_color = None
+log_level = None
+header_params = None
+
 
 class LogLevels(Enum):
     ERROR = 4
@@ -49,10 +55,15 @@ class LogLevels(Enum):
                   sep=sep, end=end + reset_color, file=file, flush=flush)
 
 
-default_header = "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
-log_colors = [fore('red'), fore('dark_orange'), fore(
-    'green_3a'), fore('white'), fore('steel_blue')]
-secondary_color = fore('blue')
-log_level = LogLevels.INFO
-header_params = ["secondary_color", "filename",
-                 "lineno", "function", "reset", "color", "log_name"]
+def init():
+    global default_header, log_colors, secondary_color, log_level, header_params
+    default_header = "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
+    log_colors = [fore('red') + style('bold') + style('underline'), fore('dark_orange') + style('bold'), fore(
+        'green_3a') + style('underline'), fore('white'), fore('steel_blue') + style('dim')]
+    secondary_color = fore('blue') + style('italic')
+    log_level = LogLevels.INFO
+    header_params = ["secondary_color", "filename",
+                     "lineno", "function", "reset", "color", "log_name"]
+
+
+init()

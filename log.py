@@ -8,7 +8,7 @@ def error(*objects, sep=' ', end='\n', file=None, flush=False):
     """
     Behaves like python's classic `print`, except
     - it adds a header with the filename, the line number (see `setHeader()`)
-    - it uses an adapted color (red, it can be changed in `setLogColors()`)
+    - it uses an adapted color (bold underlined red, it can be changed in `setLogColors()`)
     The logs shown can be configured using `setLogLevel()`
     """
     LogLevels.ERROR.log(*objects, sep=sep, end=end,
@@ -19,7 +19,7 @@ def warn(*objects, sep=' ', end='\n', file=None, flush=False):
     """
     Behaves like python's classic `print`, except
     - it adds a header with the filename, the line number (see `setHeader()`)
-    - it uses an adapted color (orange, it can be changed in `setLogColors()`)
+    - it uses an adapted color (bold orange, it can be changed in `setLogColors()`)
     The logs shown can be configured using `setLogLevel()`
     """
     LogLevels.WARN.log(*objects, sep=sep, end=end,
@@ -30,7 +30,7 @@ def info(*objects, sep=' ', end='\n', file=None, flush=False):
     """
     Behaves like python's classic `print`, except
     - it adds a header with the filename, the line number (see `setHeader()`)
-    - it uses an adapted color (green, it can be changed in `setLogColors()`)
+    - it uses an adapted color (underlined green, it can be changed in `setLogColors()`)
     The logs shown can be configured using `setLogLevel()`
     """
     LogLevels.INFO.log(*objects, sep=sep, end=end,
@@ -52,7 +52,7 @@ def trace(*objects, sep=' ', end='\n', file=None, flush=False):
     """
     Behaves like python's classic `print`, except
     - it adds a header with the filename, the line number (see `setHeader()`)
-    - it uses an adapted color (gray, it can be changed in `setLogColors()`)
+    - it uses an adapted color (dimmed steel blue, it can be changed in `setLogColors()`)
     The logs shown can be configured using `setLogLevel()`
     """
     LogLevels.TRACE.log(*objects, sep=sep, end=end,
@@ -138,8 +138,4 @@ def reset():
     """
     Reset initial values for header, log colors, secondary color and log level.
     """
-    loglib.default_header = "{secondary_color}{filename}:{lineno} ({function}){reset} {color}{log_name}: "
-    loglib.log_colors = [fore('red'), fore('dark_orange'), fore(
-        'green_3a'), fore('white'), fore('steel_blue')]
-    loglib.secondary_color = fore('blue')
-    loglib.log_level = LogLevels.INFO
+    loglib.init()

@@ -70,7 +70,6 @@ def setLogLevel(new_log_level: LogLevels):
     """
     if isinstance(new_log_level, LogLevels):
         loglib.log_level = new_log_level
-        trace("Log level changed to", new_log_level)
     else:
         warn("'" + new_log_level + "'",
              "is not an instance of type `LogLevels`, log level is unchanged.")
@@ -95,43 +94,38 @@ def setHeader(header: str):
         return
     elif all(placeholder in loglib.header_params for placeholder in re.findall(r"{(.*?)}", header)):
         loglib.default_header = header
-        trace("Header changed to ", "'" + str(header) + "'")
     else:
         warn("'" + str(header) + "'",
              "contains some unknown params (known params are ", str(loglib.header_params) + "), header is unchanged.")
         return
 
 
-def setSecondaryColor(color: str | int):
+def setSecondaryColor(color: str):
     """
-    Set optional header color using `fore()` from module `colored`.
-    Consult list of all available colors here : https://dslackw.gitlab.io/colored/tables/colors.
+    Set optional header color using `fore()` or/and `style()` from module `colored`.
+    Consult list of all available colors and styles here : https://dslackw.gitlab.io/colored/tables/.
     """
-    try:
-        loglib.secondary_color = fore(color)
-        trace("Secondary color changed to", color)
-    except:
+    if not isinstance(color, str):
         warn("'" + str(color) + "'",
-             "isn't available in function `fore()` from module `colored`, secondary color is unchanged.")
+             "is not an instance of type `str`, header is unchanged.")
         return
+    loglib.secondary_color = color
 
 
-def setLogColors(colors: list[str | int]):
+def setLogColors(colors: list[str]):
     """
-    Set 5 log color using `fore()` from module `colored` for ERROR, WARN, INFO, DEBUG, TRACE in order.
-    Consult list of all available colors here : https://dslackw.gitlab.io/colored/tables/colors.
+    Set 5 log colors using `fore()` or/and `style()` from module `colored` for ERROR, WARN, INFO, DEBUG, TRACE in order.
+    Consult list of all available colors and styles here : https://dslackw.gitlab.io/colored/tables/colors.
     """
     if len(colors) != 5:
         warn("'" + str(colors) + "'",
              "should contain 5 colors, log colors are unchanged.")
         return
-    try:
-        loglib.log_colors = [fore(color) for color in colors]
-        trace("Log colors changed to", colors)
-    except:
-        warn("Some color from '" + str(colors) + "'",
-             "isn't available in function `fore()` from module `colored`, log colors are unchanged.")
+    if not all(isinstance(color, str) for color in colors):
+        warn("'" + str(colors) + "'",
+             "contains instances that aren't of type `str`, header is unchanged.")
         return
+    loglib.log_colors = colors
 
 
 def reset():

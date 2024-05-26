@@ -1,26 +1,30 @@
 import log
+from colored import fore, style
 
 
-def test():
+def test_all_error_messages():
     # incorrect, `log.LogLevels` should be used as input
     log.setLogLevel("TRACE")
     log.setLogLevel(log.LogLevels.TRACE)
-    # the color has to exist in https://dslackw.gitlab.io/colored/tables/colors
-    log.setSecondaryColor('gray')
-    log.setSecondaryColor('red')
+    # this function expects a str
+    # an escape sequence representing a color is the expected usage
+    # for example you can used return values of `fore()` or `style()` from module `colored`
+    log.setSecondaryColor(45)
+    log.setSecondaryColor(fore('red') + style('underline'))
     # the header string has to be formattable
     log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na")
     log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na}")
     log.setHeader(
-        "{secondary_color}{filename}:{lineno}{reset} -> {color}{log_name}: ")
-    # there has to be 5 valid colors from the table mentioned above
+        "{secondary_color}({function}){reset} {filename}:{lineno} -> {color}{log_name}: ")
+    # this function expects a list of 5 str
     log.setLogColors(['red', 'orange', 'green', 'white'])
-    log.setLogColors(['red', 'orange', 'green', 'white', 'gray'])
+    log.setLogColors([fore('red') + style('bold'), fore('orange_1') + style('bold'), fore(
+        'green') + style('bold'), fore('white'), fore('dark_gray')])
     log.reset()
     print()
 
 
-def main():
+def test_all_levels():
     # supports multiple arguments separated by commas like python's print
     log.error("Division of", 54 % 27, "by", 2 - 2, "is not allowed")
 
@@ -43,5 +47,5 @@ def main():
     log.trace("Entire content of a list :", list(range(15)))
 
 
-test()
-main()
+test_all_error_messages()
+test_all_levels()

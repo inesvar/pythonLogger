@@ -1,5 +1,6 @@
 import log
 from colored import fore, style
+from colorama import Fore, Style
 
 
 def test_all_error_messages():
@@ -9,8 +10,9 @@ def test_all_error_messages():
     # this function expects a str
     # an escape sequence representing a color is the expected usage
     # for example you can used return values of `fore()` or `style()` from module `colored`
+    # but you can also use other modules
     log.setSecondaryColor(45)
-    log.setSecondaryColor(fore('red') + style('underline'))
+    log.setSecondaryColor(Fore.GREEN + style('underline'))
     # the header string has to be formattable
     log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na")
     log.setHeader("{filename}:{lineno}{reset} -> {color}{log_na}")

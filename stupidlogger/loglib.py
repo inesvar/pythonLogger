@@ -29,7 +29,7 @@ class Logger():
         self.reset()
 
     def __get_level_color(self, log_level):
-        return self.__log_colors[log_level.value]
+        return self.__log_colors[4 - log_level.value]
 
     def __print_level_header(self, log_level, file, flush):
         # filename, lineno, function, code_context, index
@@ -44,7 +44,7 @@ class Logger():
 
     def log(self, *objects, log_level=LogLevels.TRACE, sep=' ', end='\n', file=None, flush=False):
         if self.__log_level <= log_level:
-            reset_color = self.__print_level_header(file, flush)
+            reset_color = self.__print_level_header(log_level, file, flush)
             print(*objects,
                   sep=sep, end=end + reset_color, file=file, flush=flush)
 
@@ -71,7 +71,8 @@ class Logger():
                for placeholder in re.findall(r"{(.*?)}", header)):
             self.log("'" + str(header) + "'",
                      "contains some unknown params (known params are ",
-                     str(self.__header_params) + "), header is unchanged.")
+                     str(self.__header_params) + "), header is unchanged.",
+                     log_level=LogLevels.WARN)
             return
         self.__default_header = header
 

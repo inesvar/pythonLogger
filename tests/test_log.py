@@ -50,7 +50,8 @@ def test_all_levels():
 
 
 def test_encapsulation():
-    assert log.loglib.logger
+    print(log.logger)
+    print(log.logger.__default_header)
 
 
 test_all_error_messages()

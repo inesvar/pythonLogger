@@ -1,4 +1,4 @@
-from ..stupidlogger import log
+from stupidlogger import log
 from colored import fore, style
 from colorama import Fore
 
@@ -49,5 +49,10 @@ def test_all_levels():
     log.trace("Entire content of a list :", list(range(15)), end="\n\n")
 
 
+def test_encapsulation():
+    assert log.loglib.logger
+
+
 test_all_error_messages()
 test_all_levels()
+test_encapsulation()

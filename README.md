@@ -29,7 +29,7 @@ Contrary to the `logging` module, you can print multiple arguments separated by 
 warn("This is a useful message with data", 54 + 25,
      "and other stuff", list(range(1)), end="\n\n")
 ```
-![*<span style="color:#000080">&lt;stdin&gt;:1 (&lt;module&gt;)</span>* **<span style="color:#ff8700">WARN: This is a useful message with data 79 and other stuff [0]</span>**](pictures/warn_example.png)
+![](pictures/warn_example.png)
 
 Actually the log functions' signatures are exactly the same as for `print` (you can also print to a file!).
 

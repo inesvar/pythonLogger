@@ -1,4 +1,4 @@
-from ..src import log
+from ..stupidlogger import log
 from colored import fore, style
 from colorama import Fore
 

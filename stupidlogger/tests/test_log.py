@@ -1,4 +1,4 @@
-import log
+from ..src import log
 from colored import fore, style
 from colorama import Fore
 

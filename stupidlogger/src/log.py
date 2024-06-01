@@ -1,6 +1,5 @@
-from loglib import LogLevels
-from colored import fore
-import loglib
+from .loglib import LogLevels
+from . import loglib
 import re
 
 

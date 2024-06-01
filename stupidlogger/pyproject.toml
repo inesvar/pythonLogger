@@ -1,0 +1,23 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stupidlogger"
+version = "1.0.0"
+description = "Use `error`, `warn`, `info`, `debug`, `log` like you use `print`"
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["feed", "reader", "tutorial"]
+dependencies = [
+    "colored>=2.2.0",
+    "colorama>=0.2.0"
+]
+requires-python = ">=3.9"

@@ -2,3 +2,4 @@ __pycache__
 detect_direct_execution.py
 variadic.py
 myapp*
+log

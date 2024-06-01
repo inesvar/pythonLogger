@@ -3,3 +3,4 @@ detect_direct_execution.py
 variadic.py
 myapp*
 log
+*.txt

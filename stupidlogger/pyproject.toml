@@ -1,23 +1,23 @@
-# pyproject.toml
-
 [build-system]
-requires = ["setuptools>=61.0.0", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "stupidlogger"
-version = "1.0.0"
 description = "Use `error`, `warn`, `info`, `debug`, `log` like you use `print`"
-readme = "README.md"
-license = { file = "LICENSE" }
-classifiers = [
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
+version = "1.0.0"
+authors = [
+  { name="A Simple Author", email="author@example.com" },
 ]
-keywords = ["feed", "reader", "tutorial"]
+description = "A simple Python logger, intuitive to use."
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
 dependencies = [
     "colored>=2.2.0",
     "colorama>=0.2.0"
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"

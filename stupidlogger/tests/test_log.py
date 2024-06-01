@@ -46,7 +46,7 @@ def test_all_levels():
     file = open("log", "w")
     log.debug("This will be printed to a file", file=file)
 
-    log.trace("Entire content of a list :", list(range(15)))
+    log.trace("Entire content of a list :", list(range(15)), end="\n\n")
 
 
 test_all_error_messages()

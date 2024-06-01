@@ -1,6 +1,6 @@
 import log
 from colored import fore, style
-from colorama import Fore, Style
+from colorama import Fore
 
 
 def test_all_error_messages():

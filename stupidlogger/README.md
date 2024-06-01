@@ -9,7 +9,7 @@ This logger is as simple as it can be with the following features :
 
 It's based on package [colored](https://pypi.org/project/colored/) for the default log colors and styles, but you can also use [colorama](https://pypi.org/project/colorama/) or custom escape sequences to set your own colors.
 
-![alt text](pictures/log_colors.png)
+![](pictures/log_colors.png)
 
 ### 5 logging levels : error, warn, info, debug, trace<a name="one"></a>
 
@@ -29,7 +29,7 @@ Contrary to the `logging` module, you can print multiple arguments separated by 
 warn("This is a useful message with data", 54 + 25,
      "and other stuff", list(range(1)), end="\n\n")
 ```
-![alt text](pictures/warn_example.png)
+![*<span style="color:#000080">&lt;stdin&gt;:1 (&lt;module&gt;)</span>* **<span style="color:#ff8700">WARN: This is a useful message with data 79 and other stuff [0]</span>**](pictures/warn_example.png)
 
 Actually the log functions' signatures are exactly the same as for `print` (you can also print to a file!).
 

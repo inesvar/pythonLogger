@@ -1,13 +1,13 @@
 # StupidLogger
 
-This logger is as simple as it can be while still respecting the following constraints.
+This logger is as simple as it can be with the following features :
 
-1. [5 logging levels](#one)
-2. [intuitive syntax](#two)
-3. [easy customization](#three)
-4. [simple code](#four)
+- [5 logging levels](#one) : error, warn, info, debug, trace
+- an intuitive [python-style syntax](#two)
+- [easy customization](#three) for the colors and header info
+- with [documentation](#four) for ease of use
 
-It's based on `colored` (https://pypi.org/project/colored/) for the default log colors and styles, but you can also use `colorama` or other modules to set your own custom colors.
+It's based on package [colored](https://pypi.org/project/colored/) for the default log colors and styles, but you can also use [colorama](https://pypi.org/project/colorama/) or custom escape sequences to set your own colors.
 
 ![alt text](pictures/log_colors.png)
 

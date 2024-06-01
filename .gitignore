@@ -1,6 +1,4 @@
 __pycache__
-detect_direct_execution.py
-variadic.py
-myapp*
+dist
 log
-*.txt
+other

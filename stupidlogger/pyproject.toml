@@ -8,7 +8,7 @@ packages = ["src"]
 [project]
 name = "stupidlogger"
 description = "Use `error`, `warn`, `info`, `debug`, `log` like you use `print`"
-version = "1.0.0"
+version = "2.0.0"
 authors = [
   { name="A Simple Author", email="author@example.com" },
 ]

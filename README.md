@@ -2,14 +2,14 @@
 
 This logger is as simple as it can be with the following features :
 
-- [5 logging levels](#one) : error, warn, info, debug, trace
-- an intuitive [python-style syntax](#two)
-- [easy customization](#three) for the colors and header info
-- with [documentation](#four) for ease of use
+- **5 logging levels** : error, warn, info, debug, trace
+- an intuitive **python-style syntax**
+- **easy customization** for the colors and header info
+- with **documentation** for easy use
 
 It's based on package [colored](https://pypi.org/project/colored/) for the default log colors and styles, but you can also use [colorama](https://pypi.org/project/colorama/) or custom escape sequences to set your own colors.
 
-Here's an usage example :
+Here's a usage example :
 
 ```python
 import stupidlogger as log
@@ -41,7 +41,7 @@ test_all_levels()
 
 ![](https://github.com/inesvar/pythonLogger/raw/main/pictures/log_colors.png)
 
-### 5 logging levels : error, warn, info, debug, trace<a name="one"></a>
+# 5 logging levels : error, warn, info, debug, trace<a name="one"></a>
 
 You can filter out logs by using `setLogLevel`. The default level is `LogLevels.INFO`.
 
@@ -51,7 +51,7 @@ from stupidlogger import *
 setLogLevel(LogLevels.DEBUG)
 ```
 
-### It uses Python's `print` syntax<a name="two"></a>
+# It uses Python's `print` syntax<a name="two"></a>
 
 Contrary to the `logging` module, you can print multiple arguments separated by commas.
 
@@ -67,7 +67,7 @@ Actually the log functions' signatures are exactly the same as for `print` (you 
 info(*objects, sep=' ', end='\n', file=None, flush=False)
 ```
 
-### The colors and header info are entirely customizable<a name="three"></a>
+# The colors and header info are entirely customizable<a name="three"></a>
 
 The log outputs are made of two parts : the header and the message.
 
@@ -92,6 +92,6 @@ trace("trace")
 
 ![](https://github.com/inesvar/pythonLogger/raw/main/pictures/colorama_example.png)
 
-### If you still have questions<a name="four"></a>
+# If you have questions<a name="four"></a>
 
 `log.py` contains the interface. It's well documented and should provide the answers about how to use the code. The structure itself is in `loglib.py` and should provide the answers about how it works.

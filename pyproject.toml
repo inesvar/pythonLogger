@@ -8,9 +8,9 @@ packages = ["stupidlogger"]
 [project]
 name = "stupidlogger"
 description = "Use `error`, `warn`, `info`, `debug`, `log` like you use `print`"
-version = "4.0.0"
+version = "6.0.0"
 authors = [
-  { name="A Simple Author", email="author@example.com" },
+  { name="inesvar", email="90340779+inesvar@users.noreply.github.com" },
 ]
 readme = "README.md"
 classifiers = [
@@ -22,3 +22,6 @@ dependencies = [
     "colored>=2.2.0"
 ]
 requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/inesvar/pythonLogger"

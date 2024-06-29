@@ -27,7 +27,7 @@ def test_all_error_messages():
 
 
 def test_all_levels():
-    # supports multiple arguments separated by commas like python's print
+    # supports multiple arguments separated by commas like print
     log.error("Division of", 54 % 27, "by", 2 - 2, "is not allowed")
 
     # you can optionally specify `sep` and `end`
@@ -43,10 +43,10 @@ def test_all_levels():
     log.debug("i =", i)
 
     # you can output to a file (without the colors)
-    file = open("log", "w")
+    file = open("stupidlog", "w")
     log.debug("This will be printed to a file", file=file)
 
-    log.trace("Entire content of a list :", list(range(15)), end="\n\n")
+    log.trace("Entire content of a list :", list(range(9)), end="\n\n")
 
 
 def test_encapsulation():
